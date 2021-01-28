@@ -9,6 +9,7 @@ import EditOperationForm from './components/EditOperationForm';
 
 const App = () => {
   const [operations, setOperations] = useState([]);
+  const [selectedEditOperation, setSelectedEditOperation] = useState([]);
 
   useEffect(() => {
     const getOperations = async () => {
@@ -60,11 +61,29 @@ const App = () => {
     setOperations(operations.filter((operation) => operation.id !== id));
   };
 
+  // Select edit operation by id
+  const selectEditOperation = (id) => {
+    const operationsArray = operations;
+    const selectedOperation = operationsArray.filter(
+      (operation) => operation.id === id
+    )[0];
+    setSelectedEditOperation(selectedOperation);
+  };
   // Edit operation by id
-  const editOperation = async (id) => {
-    const operationToEdit = await fetchOperation(id);
-    const editOperation = { ...operationToEdit };
-    console.log('edit', id);
+  const editOperation = async (operation) => {
+    const res = await fetch(
+      `http://localhost:4000/operations/${operation.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(operation),
+      }
+    );
+
+    const data = await res.json();
+    return data;
   };
 
   return (
@@ -74,7 +93,8 @@ const App = () => {
       <List
         operations={operations}
         onDelete={deleteOperation}
-        onEdit={editOperation}
+        onSelectEdit={selectEditOperation}
+        toggleEditOperationForm={() => setShowEditOperationForm(true)}
       />
       <Controls
         toggleNewOperationForm={() =>
@@ -89,6 +109,7 @@ const App = () => {
       )}
       {showEditOperationForm && (
         <EditOperationForm
+          operation={selectedEditOperation}
           onAccept={editOperation}
           toggleEditOperationForm={() => setShowEditOperationForm(false)}
         />

@@ -1,6 +1,11 @@
 import Item from './Item';
 
-const List = ({ operations, onDelete, onEdit }) => {
+const List = ({
+  operations,
+  onDelete,
+  onSelectEdit,
+  toggleEditOperationForm,
+}) => {
   return (
     <section className="c-list">
       <div className="glass center">
@@ -12,7 +17,8 @@ const List = ({ operations, onDelete, onEdit }) => {
               key={operation.id}
               operation={operation}
               onDelete={onDelete}
-              onEdit={onEdit}
+              onSelectEdit={onSelectEdit}
+              toggleEditOperationForm={toggleEditOperationForm}
             />
           ))}
         </ul>

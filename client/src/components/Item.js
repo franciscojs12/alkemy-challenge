@@ -1,4 +1,9 @@
-const Item = ({ operation, onDelete, onEdit }) => {
+const Item = ({
+  operation,
+  onDelete,
+  onSelectEdit,
+  toggleEditOperationForm,
+}) => {
   return (
     <li className="operations-item container">
       <div className="operations-item__operation-type">
@@ -16,7 +21,10 @@ const Item = ({ operation, onDelete, onEdit }) => {
       <div className="operations-item__date">{operation.date}</div>
       <div
         className="operations-item__edit icon"
-        onClick={() => onEdit(operation.id)}
+        onClick={() => {
+          toggleEditOperationForm();
+          onSelectEdit(operation.id);
+        }}
       >
         <img src="./icons/Icon awesome-edit.svg" alt="Editar" />
       </div>
