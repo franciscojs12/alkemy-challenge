@@ -1,0 +1,20 @@
+{
+  "name": "alkemy-server",
+  "version": "1.0.0",
+  "description": "Back-end for JavaScript challenge",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "author": "franciscojs",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "mysql": "2.18.1",
+    "typeorm": "0.2.30"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.7"
+  }
+}
