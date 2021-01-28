@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const NewOperationForm = ({ onAdd, toggleNewOperationForm }) => {
+const NewOperationForm = ({ onAccept, toggleNewOperationForm }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('0');
   const [operationType, setOperationType] = useState('expense');
@@ -14,7 +14,7 @@ const NewOperationForm = ({ onAdd, toggleNewOperationForm }) => {
       return;
     }
 
-    onAdd({ description, amount, operationType, date });
+    onAccept({ description, amount, operationType, date });
 
     setDescription('');
     setAmount('');

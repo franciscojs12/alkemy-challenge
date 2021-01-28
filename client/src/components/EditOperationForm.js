@@ -1,9 +1,30 @@
-const EditOperation = () => {
+import { useState } from 'react';
+
+const EditOperation = ({ onAccept, toggleEditOperationForm }) => {
+  const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState('0');
+  const [date, setDate] = useState('2021-01-28');
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    if (amount <= 0) {
+      alert('Por favor ingrese un monto válido.');
+      return;
+    }
+
+    onAccept({ description, amount, date });
+
+    setDescription('');
+    setAmount('');
+    toggleEditOperationForm();
+  };
+
   return (
     <div className="overlay">
       <div className="form glass center">
         <h3 className="form__title container">Registrar nueva operación:</h3>
-        <form action="" className="container">
+        <form className="container" onSubmit={onSubmit}>
           <div className="form__item">
             <label htmlFor="amount-input">Monto:</label>
             <input
@@ -25,7 +46,7 @@ const EditOperation = () => {
           </div>
           <div className="form__buttons">
             <input type="submit" value="Aceptar" className="btn" />
-            <button>Cancelar</button>
+            <button onClick={toggleEditOperationForm}>Cancelar</button>
           </div>
         </form>
       </div>

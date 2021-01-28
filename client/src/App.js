@@ -5,6 +5,7 @@ import List from './components/List';
 import Controls from './components/Controls';
 import Footer from './components/Footer';
 import NewOperationForm from './components/NewOperationForm';
+import EditOperationForm from './components/EditOperationForm';
 
 const App = () => {
   const [operations, setOperations] = useState([]);
@@ -18,17 +19,25 @@ const App = () => {
     getOperations();
   }, []);
 
-  // Fetch operations from server
+  // GET operations from DB
   const fetchOperations = async () => {
     const res = await fetch('http://localhost:4000/operations');
     const data = await res.json();
     return data;
   };
+  // GET single operation from DB
+  const fetchOperation = async (id) => {
+    const res = await fetch(`http://localhost:4000/operations/${id}`);
+    const data = await res.json();
+    return data;
+  };
 
-  // Show or hide new operation form
+  // Toggle form for new operation
   const [showNewOperationForm, setShowNewOperationForm] = useState(false);
+  // Toggle form for edit operation
+  const [showEditOperationForm, setShowEditOperationForm] = useState(false);
 
-  // Add new operation
+  // POST new operation to DB
   const addOperation = async (operation) => {
     const res = await fetch('http://localhost:4000/operations', {
       method: 'POST',
@@ -42,7 +51,7 @@ const App = () => {
     setOperations([data, ...operations]);
   };
 
-  // Delete operation by id
+  // DELETE operation by id
   const deleteOperation = async (id) => {
     await fetch(`http://localhost:4000/operations/${id}`, {
       method: 'DELETE',
@@ -52,7 +61,9 @@ const App = () => {
   };
 
   // Edit operation by id
-  const editOperation = async (id, operation) => {
+  const editOperation = async (id) => {
+    const operationToEdit = await fetchOperation(id);
+    const editOperation = { ...operationToEdit };
     console.log('edit', id);
   };
 
@@ -72,8 +83,14 @@ const App = () => {
       />
       {showNewOperationForm && (
         <NewOperationForm
-          onAdd={addOperation}
+          onAccept={addOperation}
           toggleNewOperationForm={() => setShowNewOperationForm(false)}
+        />
+      )}
+      {showEditOperationForm && (
+        <EditOperationForm
+          onAccept={editOperation}
+          toggleEditOperationForm={() => setShowEditOperationForm(false)}
         />
       )}
       <Footer />
