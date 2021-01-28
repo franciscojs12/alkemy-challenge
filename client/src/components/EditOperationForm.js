@@ -5,7 +5,7 @@ const EditOperation = () => {
         <h3 className="form__title container">Registrar nueva operación:</h3>
         <form action="" className="container">
           <div className="form__item">
-            <label for="amount-input">Monto:</label>
+            <label htmlFor="amount-input">Monto:</label>
             <input
               type="number"
               step="0.01"
@@ -16,11 +16,11 @@ const EditOperation = () => {
             />
           </div>
           <div className="form__item">
-            <label for="desc-input">Concepto:</label>
+            <label htmlFor="desc-input">Concepto:</label>
             <input type="text" id="desc-input" name="desc-input" value="" />
           </div>
           <div className="form__item">
-            <label for="date-input">Fecha:</label>
+            <label htmlFor="date-input">Fecha:</label>
             <input type="date" id="date-input" name="date-input" />
           </div>
           <div className="form__buttons">

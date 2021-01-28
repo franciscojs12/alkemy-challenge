@@ -27,7 +27,7 @@ const NewOperationForm = ({ onAdd, toggleNewOperationForm }) => {
         <h3 className="form__title container">Registrar nueva operación:</h3>
         <form className="container" onSubmit={onSubmit}>
           <div className="form__item">
-            <label for="amount-input">Monto:</label>
+            <label htmlFor="amount-input">Monto:</label>
             <input
               type="number"
               step="0.01"
@@ -40,7 +40,7 @@ const NewOperationForm = ({ onAdd, toggleNewOperationForm }) => {
             />
           </div>
           <div className="form__item">
-            <label for="type-input">Tipo de operación:</label>
+            <label htmlFor="type-input">Tipo de operación:</label>
             <select
               id="type-input"
               name="type-input"
@@ -52,7 +52,7 @@ const NewOperationForm = ({ onAdd, toggleNewOperationForm }) => {
             </select>
           </div>
           <div className="form__item">
-            <label for="desc-input">Concepto:</label>
+            <label htmlFor="desc-input">Concepto:</label>
             <input
               type="text"
               id="desc-input"
@@ -62,7 +62,7 @@ const NewOperationForm = ({ onAdd, toggleNewOperationForm }) => {
             />
           </div>
           <div className="form__item">
-            <label for="date-input">Fecha:</label>
+            <label htmlFor="date-input">Fecha:</label>
             <input
               type="date"
               id="date-input"

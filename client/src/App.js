@@ -52,7 +52,7 @@ const App = () => {
   };
 
   // Edit operation by id
-  const editOperation = (id) => {
+  const editOperation = async (id, operation) => {
     console.log('edit', id);
   };
 
