@@ -83,6 +83,15 @@ const App = () => {
   };
   // Edit operation by id
   const editOperation = async (operation) => {
+    setOperations((prev) =>
+      prev.map((_operation) => {
+        if (operation.id === _operation.id) {
+          return operation;
+        }
+        return _operation;
+      })
+    );
+
     const res = await fetch(
       `http://localhost:4000/operations/${operation.id}`,
       {
