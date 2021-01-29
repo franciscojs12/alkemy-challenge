@@ -19,6 +19,8 @@ const App = () => {
     false
   );
 
+  const [seeMore, setSeeMore] = useState(false);
+
   const newOperationsFirst = (_operations) => {
     return _operations.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
   };
@@ -29,6 +31,10 @@ const App = () => {
       : operations.filter(
           ({ operationType }) => operationType === selectedOperationType
         );
+
+  const displayedOperations = !seeMore
+    ? filteredOperations.slice(0, 10)
+    : filteredOperations;
 
   const totalBalance = operations.reduce((acc, { amount, operationType }) => {
     if (operationType === 'income') {
@@ -112,10 +118,12 @@ const App = () => {
       <Header />
       <Main balance={totalBalance} />
       <List
-        operations={filteredOperations}
+        operations={displayedOperations}
         onDelete={deleteOperation}
         onSelectEdit={selectEditOperation}
         toggleEditOperationForm={() => setIsEditOperationFormEnabled(true)}
+        seeMore={() => setSeeMore(!seeMore)}
+        seeMoreState={seeMore}
       />
 
       <section className="controls">

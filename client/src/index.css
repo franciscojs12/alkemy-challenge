@@ -128,6 +128,11 @@ button:active,
   transform: translateY(1px);
 }
 
+.rotated {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
 @font-face {
   font-family: 'Montserrat';
   src: local('Montserrat'),

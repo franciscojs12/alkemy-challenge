@@ -5,6 +5,8 @@ const List = ({
   onDelete,
   onSelectEdit,
   toggleEditOperationForm,
+  seeMore,
+  seeMoreState,
 }) => {
   return (
     <section className="c-list">
@@ -24,13 +26,26 @@ const List = ({
         </ul>
 
         <footer className="c-list__footer container">
-          <div className="c-list__load-more icon">
+          <div
+            className={`c-list__load-more icon ${seeMoreRotation(
+              seeMoreState
+            )}`}
+            onClick={() => {
+              seeMore();
+            }}
+          >
             <img src="./icons/Icon awesome-chevron-down.svg" alt="Ver más" />
           </div>
         </footer>
       </div>
     </section>
   );
+};
+
+const seeMoreRotation = (seeMoreState) => {
+  if (seeMoreState) {
+    return 'rotated';
+  }
 };
 
 export default List;
