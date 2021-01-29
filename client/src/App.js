@@ -26,17 +26,26 @@ const App = () => {
           ({ operationType }) => operationType === selectedOperationType
         );
 
+  const totalBalance = operations.reduce((acc, { amount, operationType }) => {
+    if (operationType === 'income') {
+      return acc + Number(amount);
+    } else {
+      return acc - Number(amount);
+    }
+  }, 0);
+
+  // Load all operations
   useEffect(() => {
-    const getOperations = async () => {
-      const operationsFromServer = await fetchOperations();
+    const loadOperations = async () => {
+      const operationsFromServer = await getOperations();
       setOperations(operationsFromServer.reverse());
     };
     console.log('useEffect triggered');
-    getOperations();
+    loadOperations();
   }, []);
 
   // GET operations from DB
-  const fetchOperations = async () => {
+  const getOperations = async () => {
     const res = await fetch('http://localhost:4000/operations');
     const data = await res.json();
     return data;
@@ -91,7 +100,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <Main balance={10} />
+      <Main balance={totalBalance} />
       <List
         operations={operations}
         onDelete={deleteOperation}
