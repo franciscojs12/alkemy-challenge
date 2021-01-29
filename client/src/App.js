@@ -19,6 +19,10 @@ const App = () => {
     false
   );
 
+  const newOperationsFirst = (_operations) => {
+    return _operations.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+  };
+
   const filteredOperations =
     selectedOperationType === 'all'
       ? operations
@@ -42,16 +46,17 @@ const App = () => {
   };
 
   // POST new operation to DB
-  const addOperation = async (operation) => {
+  const addOperation = async (_operation) => {
     const res = await fetch('http://localhost:4000/operations', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify(operation),
+      body: JSON.stringify(_operation),
     });
 
     const data = await res.json();
+    // newOperationsFirst(setOperations([data, ...operations]));
     setOperations([data, ...operations]);
   };
 
@@ -98,7 +103,7 @@ const App = () => {
   // Load all operations on mount
   useEffect(() => {
     getOperations().then((loadedOperations) => {
-      setOperations(loadedOperations);
+      setOperations(newOperationsFirst(loadedOperations));
     });
   }, []);
 
