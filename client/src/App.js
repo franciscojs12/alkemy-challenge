@@ -51,6 +51,7 @@ const App = () => {
     await fetch(`http://localhost:4000/operations/${id}`, {
       method: 'DELETE',
     });
+    setOperations(operations.filter((operation) => operation.id !== id));
   };
 
   // Select edit operation by id
