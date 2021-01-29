@@ -10,11 +10,22 @@ import EditOperationForm from './components/EditOperationForm';
 const App = () => {
   const [operations, setOperations] = useState([]);
   const [selectedEditOperation, setSelectedEditOperation] = useState([]);
+  const [selectedOperationType, setSelectedOperationType] = useState('all'); // income/expense/all
 
-  // Toggle form for new operation
-  const [showNewOperationForm, setShowNewOperationForm] = useState(false);
-  // Toggle form for edit operation
-  const [showEditOperationForm, setShowEditOperationForm] = useState(false);
+  // const filteredOperations =
+  //   selectedOperationType === 'all'
+  //     ? operations
+  //     : operations.filter(
+  //         ({ operationType }) => operationType === selectEditOperationType
+  //       );
+
+  // Toggle forms
+  const [isNewOperationFormEnabled, setIsNewOperationFormEnabled] = useState(
+    false
+  );
+  const [isEditOperationFormEnabled, setIsEditOperationFormEnabled] = useState(
+    false
+  );
 
   useEffect(() => {
     const getOperations = async () => {
@@ -86,24 +97,24 @@ const App = () => {
         operations={operations}
         onDelete={deleteOperation}
         onSelectEdit={selectEditOperation}
-        toggleEditOperationForm={() => setShowEditOperationForm(true)}
+        toggleEditOperationForm={() => setIsEditOperationFormEnabled(true)}
       />
       <Controls
         toggleNewOperationForm={() =>
-          setShowNewOperationForm(!showNewOperationForm)
+          setIsNewOperationFormEnabled(!isNewOperationFormEnabled)
         }
       />
-      {showNewOperationForm && (
+      {isNewOperationFormEnabled && (
         <NewOperationForm
           onAccept={addOperation}
-          toggleNewOperationForm={() => setShowNewOperationForm(false)}
+          toggleNewOperationForm={() => setIsNewOperationFormEnabled(false)}
         />
       )}
-      {showEditOperationForm && (
+      {isEditOperationFormEnabled && (
         <EditOperationForm
           operation={selectedEditOperation}
           onAccept={editOperation}
-          toggleEditOperationForm={() => setShowEditOperationForm(false)}
+          toggleEditOperationForm={() => setIsEditOperationFormEnabled(false)}
         />
       )}
       <Footer />
