@@ -2,22 +2,14 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
 import List from './components/List';
-import Controls from './components/Controls';
 import Footer from './components/Footer';
 import NewOperationForm from './components/NewOperationForm';
 import EditOperationForm from './components/EditOperationForm';
 
 const App = () => {
   const [operations, setOperations] = useState([]);
-  const [selectedEditOperation, setSelectedEditOperation] = useState([]);
   const [selectedOperationType, setSelectedOperationType] = useState('all'); // income/expense/all
-
-  // const filteredOperations =
-  //   selectedOperationType === 'all'
-  //     ? operations
-  //     : operations.filter(
-  //         ({ operationType }) => operationType === selectEditOperationType
-  //       );
+  const [selectedEditOperation, setSelectedEditOperation] = useState([]);
 
   // Toggle forms
   const [isNewOperationFormEnabled, setIsNewOperationFormEnabled] = useState(
@@ -26,6 +18,13 @@ const App = () => {
   const [isEditOperationFormEnabled, setIsEditOperationFormEnabled] = useState(
     false
   );
+
+  const filteredOperations =
+    selectedOperationType === 'all'
+      ? operations
+      : operations.filter(
+          ({ operationType }) => operationType === selectedOperationType
+        );
 
   useEffect(() => {
     const getOperations = async () => {
@@ -99,11 +98,42 @@ const App = () => {
         onSelectEdit={selectEditOperation}
         toggleEditOperationForm={() => setIsEditOperationFormEnabled(true)}
       />
-      <Controls
-        toggleNewOperationForm={() =>
-          setIsNewOperationFormEnabled(!isNewOperationFormEnabled)
-        }
-      />
+
+      <section className="controls">
+        <div className="container">
+          <button
+            className="btn"
+            id="btn-expense"
+            onClick={() => setSelectedOperationType('all')}
+          >
+            Ver todo
+          </button>
+          <button
+            className="btn"
+            id="btn-income"
+            onClick={() => setSelectedOperationType('income')}
+          >
+            Ver ingresos
+          </button>
+          <button
+            className="btn"
+            id="btn-expense"
+            onClick={() => setSelectedOperationType('expense')}
+          >
+            Ver egresos
+          </button>
+          <button
+            className="btn"
+            id="btn-new-operation"
+            onClick={() =>
+              setIsNewOperationFormEnabled(!isNewOperationFormEnabled)
+            }
+          >
+            Registrar operación
+          </button>
+        </div>
+      </section>
+
       {isNewOperationFormEnabled && (
         <NewOperationForm
           onAccept={addOperation}
