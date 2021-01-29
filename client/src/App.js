@@ -34,16 +34,6 @@ const App = () => {
     }
   }, 0);
 
-  // Load all operations
-  useEffect(() => {
-    const loadOperations = async () => {
-      const operationsFromServer = await getOperations();
-      setOperations(operationsFromServer.reverse());
-    };
-    console.log('useEffect triggered');
-    loadOperations();
-  }, []);
-
   // GET operations from DB
   const getOperations = async () => {
     const res = await fetch('http://localhost:4000/operations');
@@ -91,7 +81,6 @@ const App = () => {
         return _operation;
       })
     );
-
     const res = await fetch(
       `http://localhost:4000/operations/${operation.id}`,
       {
@@ -106,12 +95,19 @@ const App = () => {
     return data;
   };
 
+  // Load all operations on mount
+  useEffect(() => {
+    getOperations().then((loadedOperations) => {
+      setOperations(loadedOperations);
+    });
+  }, []);
+
   return (
     <div className="App">
       <Header />
       <Main balance={totalBalance} />
       <List
-        operations={operations}
+        operations={filteredOperations}
         onDelete={deleteOperation}
         onSelectEdit={selectEditOperation}
         toggleEditOperationForm={() => setIsEditOperationFormEnabled(true)}
