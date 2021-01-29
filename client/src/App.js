@@ -11,12 +11,17 @@ const App = () => {
   const [operations, setOperations] = useState([]);
   const [selectedEditOperation, setSelectedEditOperation] = useState([]);
 
+  // Toggle form for new operation
+  const [showNewOperationForm, setShowNewOperationForm] = useState(false);
+  // Toggle form for edit operation
+  const [showEditOperationForm, setShowEditOperationForm] = useState(false);
+
   useEffect(() => {
     const getOperations = async () => {
       const operationsFromServer = await fetchOperations();
       setOperations(operationsFromServer.reverse());
     };
-
+    console.log('useEffect triggered');
     getOperations();
   }, []);
 
@@ -26,17 +31,6 @@ const App = () => {
     const data = await res.json();
     return data;
   };
-  // GET single operation from DB
-  const fetchOperation = async (id) => {
-    const res = await fetch(`http://localhost:4000/operations/${id}`);
-    const data = await res.json();
-    return data;
-  };
-
-  // Toggle form for new operation
-  const [showNewOperationForm, setShowNewOperationForm] = useState(false);
-  // Toggle form for edit operation
-  const [showEditOperationForm, setShowEditOperationForm] = useState(false);
 
   // POST new operation to DB
   const addOperation = async (operation) => {
@@ -57,8 +51,6 @@ const App = () => {
     await fetch(`http://localhost:4000/operations/${id}`, {
       method: 'DELETE',
     });
-
-    setOperations(operations.filter((operation) => operation.id !== id));
   };
 
   // Select edit operation by id
@@ -81,7 +73,6 @@ const App = () => {
         body: JSON.stringify(operation),
       }
     );
-
     const data = await res.json();
     return data;
   };
@@ -89,7 +80,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <Main />
+      <Main balance={10} />
       <List
         operations={operations}
         onDelete={deleteOperation}
